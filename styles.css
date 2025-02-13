@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffe6e6;
+}
+.container {
+    margin-top: 20vh;
+}
+h1 {
+    color: #ff3366;
+}
+.btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.yes {
+    background-color: #ff3366;
+    color: white;
+}
+.no {
+    background-color: #cccccc;
+    color: black;
+}
+.hidden {
+    display: none;
+}

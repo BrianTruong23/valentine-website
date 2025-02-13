@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine?</title>
+  <style>
+    /* General styles */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background: linear-gradient(45deg, #ffcccc, #ffe6e6);
+      overflow-x: hidden;
+      transition: background 1s ease;
+    }
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s ease;
+      padding: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #ff3366;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    /* Bouncing heart animation */
+    .heart {
+      display: inline-block;
+      animation: bounce 1.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .cute-pic{
+        width: 450px;
+    }
+
+    .valentines{
+        background-color: white;
+        border-radius: 5px;
+        padding: 10px 15px;
+    }
+    /* Button styles */
+    .btn {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      margin: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .yes {
+      background-color: #ff3366;
+      color: white;
+    }
+    .no {
+      background-color: #cccccc;
+      color: #333;
+    }
+    /* NYC Page Styles */
+    #nyc-page {
+      background: url('nyc.jpg') no-repeat center center/cover;
+      color: white;
+      position: relative;
+    }
+    /* Dark overlay for NYC page */
+    #nyc-page::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+    #nyc-page > * {
+      position: relative;
+      z-index: 1;
+    }
+    /* Grid layout for activities */
+    #activities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0;
+      list-style: none;
+    }
+    .activity-item {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .activity-item:hover {
+      transform: scale(1.02);
+    }
+    .activity-item img {
+      width: 100%;
+      display: block;
+    }
+    .activity-description {
+      padding: 15px;
+      text-align: left;
+      color: #333;
+    }
+    .completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    /* Fade In Animation */
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Activity adder styles */
+    .activity-adder {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .activity-adder input {
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+      width: 250px;
+    }
+    .activity-adder button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #ff3366;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .activity-adder button:hover {
+      transform: scale(1.05);
+    }
+  </style>
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+</head>
+<body>
+  <!-- Valentine Proposal Page -->
+  <div class="container" id="valentine-page">
+    <img src="cute.png" alt="" class = "cute-pic">
+    <h1 id="proposal-text">Will you be my Valentine? <span class="heart">❤️</span></h1>
+    <button class="btn yes" id="yes-button" onclick="showNYCPage()">Yes</button>
+    <button class="btn no" id="no-button" onclick="handleNo()">No</button>
+  </div>
+
+  <!-- NYC Adventure Page -->
+  <div class="container hidden" id="nyc-page">
+    <h1 class="fade-in valentines">Happy Valentines babe🗽✨</h1>
+    <p class="fade-in">Here are some exciting adventures we can experience:</p>
+    
+    <!-- Activity adder -->
+    <div class="activity-adder fade-in">
+      <input type="text" id="new-activity" placeholder="Add a new activity..." />
+      <button onclick="addActivity()">Add</button>
+    </div>
+    
+    <!-- Activities Grid -->
+    <ul id="activities-grid">
+      <!-- The MET -->
+      <li class="activity-item fade-in" onclick="toggleCompleted(this)">
+        <img src="images/g8.png" alt="The MET" />
+        <div class="activity-description">
+          <h3>The MET</h3>
+          <p>Explore timeless art and culture at the Metropolitan Museum of Art.</p>
+        </div>
+      </li>
+      <!-- Omakase -->
+      <li class="activity-item fade-in" onclick="toggleCompleted(this)">
+        <img src="images/g9.png" alt="Omakase Dining" />
+        <div class="activity-description">
+          <h3>Omakase</h3>
+          <p>Indulge in a delightful sushi experience with omakase dining.</p>
+        </div>
+      </li>
+      <!-- Ride Through the Sunset -->
+      <li class="activity-item fade-in" onclick="toggleCompleted(this)">
+        <img src="images/g10.png" alt="Sunset Ride" />
+        <div class="activity-description">
+          <h3>Ride Through the Sunset</h3>
+          <p>Take a breezy ride while watching a mesmerizing New York sunset.</p>
+        </div>
+      </li>
+      <!-- Catch the Sunrise -->
+      <li class="activity-item fade-in" onclick="toggleCompleted(this)">
+        <img src="images/g11.png" alt="Sunrise Catch" />
+        <div class="activity-description">
+          <h3>Catch the Sunrise</h3>
+          <p>Start our day with a beautiful sunrise that promises new beginnings.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    // Show NYC page with confetti
+    function showNYCPage() {
+      // Launch confetti
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      // Fade out Valentine page
+      const valentinePage = document.getElementById('valentine-page');
+      valentinePage.style.opacity = '0';
+      setTimeout(() => {
+        valentinePage.classList.add('hidden');
+        const nycPage = document.getElementById('nyc-page');
+        nycPage.classList.remove('hidden');
+        nycPage.style.opacity = '0';
+        setTimeout(() => {
+          nycPage.style.opacity = '1';
+        }, 50);
+      }, 1000);
+    }
+
+    // Alert for "No" response
+    function noResponse() {
+      alert('Oh no! 💔 Maybe next time...');
+    }
+
+    // Toggle the completed state of an activity
+    function toggleCompleted(item) {
+      item.classList.toggle('completed');
+    }
+
+    // Add new activity to the grid
+    function addActivity() {
+      const input = document.getElementById('new-activity');
+      const text = input.value.trim();
+      if (text !== '') {
+        const li = document.createElement('li');
+        li.className = 'activity-item fade-in';
+        li.onclick = function() { toggleCompleted(li); };
+        li.innerHTML = `
+
+          <div class="activity-description">
+            <h3>${text}</h3>
+            <p>New adventure added by you.</p>
+          </div>
+        `;
+        document.getElementById('activities-grid').appendChild(li);
+        input.value = '';
+      }
+    }
+
+    let noCount = 0;
+
+    function handleNo() {
+      noCount++;
+      const yesButton = document.getElementById('yes-button');
+      // Increase the scale of the Yes button gradually
+      const newScale = 1 + noCount * 0.1;
+      yesButton.style.transform = 'scale(' + newScale + ')';
+
+      // Update the proposal text based on the number of No clicks
+      const proposalText = document.getElementById('proposal-text');
+      if(noCount === 1) {
+        proposalText.innerHTML = "I don't want to ask again, but will you be my Valentine? <span class='heart'>❤️</span>";
+      } else if(noCount === 2) {
+        proposalText.innerHTML = "OK, let's try one more time, will you be my Valentine? <span class='heart'>❤️</span>";
+      } else if(noCount === 3) {
+        proposalText.innerHTML = "Are you sure? Will you be my Valentine? <span class='heart'>❤️</span>";
+      } else if(noCount === 4) {
+        proposalText.innerHTML = "Maybe you'll change your mind... Will you be my Valentine? <span class='heart'>❤️</span>";
+      } else if(noCount === 5) {
+        proposalText.innerHTML = "I really want you to be my Valentine. What do you say? <span class='heart'>❤️</span>";
+      } else if(noCount === 6) {
+        proposalText.innerHTML = "Come on, just one yes? Will you be my Valentine? <span class='heart'>❤️</span>";
+      } else if(noCount === 7) {
+        proposalText.innerHTML = "I know you secretly want to say yes. Will you be my Valentine? <span class='heart'>❤️</span>";
+      } else if(noCount === 8) {
+        proposalText.innerHTML = "No? Really? Please say yes! <span class='heart'>❤️</span>";
+      } else if(noCount === 9) {
+        proposalText.innerHTML = "I'm trying my best here... Will you be my Valentine? <span class='heart'>❤️</span>";
+      } else if(noCount === 10) {
+        proposalText.innerHTML = "This is getting ridiculous, just say yes! <span class='heart'>❤️</span>";
+      } else if(noCount >= 11) {
+        proposalText.innerHTML = "Fine, both buttons say Yes! <span class='heart'>❤️</span>";
+        // Change the No button into a Yes button
+        const noButton = document.getElementById('no-button');
+        noButton.innerText = "Yes";
+        noButton.onclick = showNYCPage;
+      }
+    }
+  </script>
+</body>
+</html>

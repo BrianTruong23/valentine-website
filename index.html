@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Be My Valentine?</title>
+  <link rel="icon" type="image/x-icon" href="favicon/favicon.ico" />
   <style>
     /* General styles */
     body {
@@ -124,7 +125,7 @@
       width: 100%;
       display: block;
     }
-    .activity-description {
+    .activity-description-nyc {
       padding: 15px;
       text-align: left;
       color: #333;
@@ -207,13 +208,13 @@
       margin-bottom: 20px;
   }
 
-  .activity-description-nyc {
+  .activity-description {
     color: white;
     padding: 15px;
     text-align: left;
   }
 
-  .activity-item:hover .activity-description-nyc {
+  .activity-item:hover .activity-description {
       color: black;
     }
     
@@ -329,7 +330,7 @@
       <!-- The MET -->
       <li class="activity-item-nyc fade-in" onclick="toggleCompleted(this)">
         <img src="images/g8.png" alt="The MET" />
-        <div class="activity-description">
+        <div class="activity-description-nyc">
           <h3>The MET</h3>
           <p>This is where the fun begins. This is where we will see the beautiful art that displays - something that you always wanted! </p>
         </div>
@@ -337,7 +338,7 @@
       <!-- Omakase -->
       <li class="activity-item-nyc fade-in" onclick="toggleCompleted(this)">
         <img src="images/g9.png" alt="Omakase Dining" />
-        <div class="activity-description">
+        <div class="activity-description-nyc">
           <h3>Omakase</h3>
           <p>A sushi experience only made for us!</p>
         </div>
@@ -345,7 +346,7 @@
       <!-- Ride Through the Sunset -->
       <li class="activity-item-nyc fade-in" onclick="toggleCompleted(this)">
         <img src="images/g10.png" alt="Sunset Ride" />
-        <div class="activity-description">
+        <div class="activity-description-nyc">
           <h3>Ride Through the Sunset</h3>
           <p>Watching the mesmerizing sunset together!</p>
         </div>
@@ -353,7 +354,7 @@
       <!-- Catch the Sunrise -->
       <li class="activity-item-nyc fade-in" onclick="toggleCompleted(this)">
         <img src="images/g11.png" alt="Sunrise Catch" />
-        <div class="activity-description">
+        <div class="activity-description-nyc">
           <h3>Catch the Sunrise</h3>
           <p>Waking up early? Can we do that? To see the beautiful sunrise? I guess we will see.</p>
         </div>
@@ -424,11 +425,11 @@
       const text = input.value.trim();
       if (text !== '') {
         const li = document.createElement('li');
-        li.className = 'activity-item fade-in';
+        li.className = 'activity-item-nyc fade-in';
         li.onclick = function() { toggleCompleted(li); };
         li.innerHTML = `
 
-          <div class="activity-description">
+          <div class="activity-description-nyc">
             <h3>${text}</h3>
             <p>New adventure added by my love.</p>
           </div>
@@ -593,7 +594,7 @@
         // Fill in content
         listItem.innerHTML = `
           <img src="${memory.preview}" alt="${memory.title}" />
-          <div class="activity-description-nyc">
+          <div class="activity-description">
             <h3>${memory.title}</h3>
             <p>${memory.description}</p>
           </div>

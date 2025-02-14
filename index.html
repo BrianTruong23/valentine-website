@@ -72,6 +72,10 @@
       background-color: #ff3366;
       color: white;
     }
+    .changesong-btn {
+      background-color: #D91656;
+      color: white;
+    }
     .no {
       background-color: #cccccc;
       color: #333;
@@ -158,7 +162,7 @@
       margin-right: 10px;
       width: 250px;
     }
-    .activity-adder button {
+    .activity-adder button, .letter-container button {
       padding: 10px 20px;
       font-size: 1rem;
       border: none;
@@ -168,18 +172,108 @@
       cursor: pointer;
       transition: transform 0.2s ease;
     }
-    .activity-adder button:hover {
+    .activity-adder button:hover, .letter-container button:hover {
       transform: scale(1.05);
+
     }
+    .letter-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    color: black
+  }
+
+
+  .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+  }
+  .gallery img {
+      width: 400px;
+      height: auto;
+      border-radius: 8px;
+  }
+  .memory-section {
+      margin-bottom: 20px;
+  }
+
+  .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+    .activity-item:hover {
+      background: #f5f5f5;
+    }
+    .activity-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .completed {
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+
+     /* Gallery Modal Styles */
+     #gallery-modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      overflow: auto;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 20px;
+    }
+    #gallery-modal img {
+      width: 200px;
+      height: auto;
+      border-radius: 8px;
+      margin: 10px;
+    }
+    #close-btn {
+      position: absolute;
+      top: 20px; 
+      right: 30px;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+
+
+
+  
   </style>
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 </head>
 <body>
+
   <!-- Valentine Proposal Page -->
   <div class="container" id="valentine-page">
     <img src="cute.png" alt="" class = "cute-pic">
-    <h1 id="proposal-text">Will you be my Valentine? <span class="heart">❤️</span></h1>
+    <h1 id="proposal-text">Will you be my Valentine? My matcha 🍵 <span class="heart">❤️</span></h1>
     <button class="btn yes" id="yes-button" onclick="showNYCPage()">Yes</button>
     <button class="btn no" id="no-button" onclick="handleNo()">No</button>
   </div>
@@ -188,6 +282,24 @@
   <div class="container hidden" id="nyc-page">
     <h1 class="fade-in valentines">Happy Valentines babe🗽✨</h1>
     <p class="fade-in">Here are some exciting adventures we can experience:</p>
+
+    <button class="btn changesong-btn" id="letter-button" onclick="changeSong()">Change song</button>
+    <button class="btn yes" id="letter-button" onclick="showLetter()">Letter of Valentines (Click me)</button>
+    <div id="valentine-letter" class="hidden letter-container">
+      <p class="letter-content">Dear Baobei <br><br>
+        I can't believe it is almost a year ago that we started dating. Every moment with you feel short because I want more and every day with you feel never enough. 
+        Thank you for being patient with me. Thank you for being so kind towards my immaturity. I think I grew over time during our relationship. 
+        I just love us being silly and doing life together. 
+        Those moments give me a glimpse into the future that I can't wait to have with you. This may sound cheesy, but there is no other place that I want to be other than next to you. There is no other person I want to do life with other than you.
+        What a year full of memories! What a year full of love and experiences! This Valentine, I want to be there with you in New York and have the best time of our life. This Valentine, I want to treasure you and love you the best way that I can. A surprise is coming to your house as I am writing this letter. 
+        I love you to the moon and back. I love you 3000.  <br><br>
+        Your love, <br>
+        Thang Truong
+      </p>
+
+      <button onclick = "voiceLetter()">Sound on! Headphone on!🙈🔉</button>
+
+    </div>
     
     <!-- Activity adder -->
     <div class="activity-adder fade-in">
@@ -202,7 +314,7 @@
         <img src="images/g8.png" alt="The MET" />
         <div class="activity-description">
           <h3>The MET</h3>
-          <p>Explore timeless art and culture at the Metropolitan Museum of Art.</p>
+          <p>This is where the fun begins. This is where we will see the beautiful art that displays - something that you always wanted! </p>
         </div>
       </li>
       <!-- Omakase -->
@@ -210,7 +322,7 @@
         <img src="images/g9.png" alt="Omakase Dining" />
         <div class="activity-description">
           <h3>Omakase</h3>
-          <p>Indulge in a delightful sushi experience with omakase dining.</p>
+          <p>A sushi experience only made for us!</p>
         </div>
       </li>
       <!-- Ride Through the Sunset -->
@@ -218,7 +330,7 @@
         <img src="images/g10.png" alt="Sunset Ride" />
         <div class="activity-description">
           <h3>Ride Through the Sunset</h3>
-          <p>Take a breezy ride while watching a mesmerizing New York sunset.</p>
+          <p>Watching the mesmerizing sunset together!</p>
         </div>
       </li>
       <!-- Catch the Sunrise -->
@@ -226,11 +338,37 @@
         <img src="images/g11.png" alt="Sunrise Catch" />
         <div class="activity-description">
           <h3>Catch the Sunrise</h3>
-          <p>Start our day with a beautiful sunrise that promises new beginnings.</p>
+          <p>Waking up early? Can we do that? To see the beautiful sunrise? I guess we will see.</p>
         </div>
       </li>
     </ul>
+
+    
+      <h2>My favorite memory with you!</h2>
+      <ul id="memories-list"></ul>
+
+      <!-- Modal for the full gallery -->
+      <div id="gallery-modal">
+        <button id="close-btn" onclick="closeGallery()">×</button>
+      </div>
   </div>
+
+
+ 
+
+  <audio id="love-song" loop>
+    <source src="audio/love_song.m4a" type="audio/mpeg">
+  </audio>
+
+  <audio id="love-song-2" loop>
+    <source src="audio/love_song2.m4a" type="audio/mpeg">
+  </audio>
+  
+  <audio id="love-letter-audio">
+    <source src="audio/love_letter.m4a" type="audio/mpeg">
+  </audio>
+
+
 
   <script>
     // Show NYC page with confetti
@@ -253,12 +391,10 @@
           nycPage.style.opacity = '1';
         }, 50);
       }, 1000);
+
+      document.getElementById("love-song").play();
     }
 
-    // Alert for "No" response
-    function noResponse() {
-      alert('Oh no! 💔 Maybe next time...');
-    }
 
     // Toggle the completed state of an activity
     function toggleCompleted(item) {
@@ -277,7 +413,7 @@
 
           <div class="activity-description">
             <h3>${text}</h3>
-            <p>New adventure added by you.</p>
+            <p>New adventure added by my love.</p>
           </div>
         `;
         document.getElementById('activities-grid').appendChild(li);
@@ -317,13 +453,192 @@
       } else if(noCount === 10) {
         proposalText.innerHTML = "This is getting ridiculous, just say yes! <span class='heart'>❤️</span>";
       } else if(noCount >= 11) {
-        proposalText.innerHTML = "Fine, both buttons say Yes! <span class='heart'>❤️</span>";
+        proposalText.innerHTML = "How about now? Both buttons say yes now I think! <span class='heart'>❤️</span>";
         // Change the No button into a Yes button
         const noButton = document.getElementById('no-button');
         noButton.innerText = "Yes";
         noButton.onclick = showNYCPage;
       }
     }
+
+
+    function changeSong() {
+      let song1 = document.getElementById("love-song");
+      let song2 = document.getElementById("love-song-2");
+
+      // Stop and reset the current song
+      song1.pause();
+      song1.currentTime = 0; 
+
+      // Play the new song
+      song2.play();
+    }
+
+    function showLetter() {
+      document.getElementById("valentine-letter").style.display = "block";
+      
+    }
+
+    function voiceLetter(){
+      document.getElementById("love-letter-audio").play();
+    }
+
+    // Each memory has a preview (one image) and a gallery (array of images)
+    const memories = [
+
+
+      {
+        title: 'Exploring New York',
+        description: 'Our Previous New York Trip',
+        preview: 'images/new_york.JPG',
+        gallery: [
+          'images/new_york_2.JPG',
+          'images/new_york_3.JPG',
+          'images/new_york_4.JPG',
+          'images/new_york_5.JPG',
+          'images/new_york_6.JPG',
+          'images/new_york_7.JPG',
+          'images/new_york_8.JPG',
+          'images/new_york_9.JPG',
+          'images/new_york_10.JPG',
+
+        ]
+      },
+      {
+        title: 'River Walk Every Day',
+        description: 'Enjoying the view of river walk',
+        preview: 'images/san_antonio_1.JPG',
+        gallery: [
+          'images/san_antonio_1.JPG',
+          'images/san_antonio_2.JPG',
+          'images/san_antonio_3.JPG',     
+          'images/san_antonio_4.JPG',
+          'images/san_antonio_5.JPG',
+          'images/san_antonio_6.JPG'
+        ]
+      },
+      {
+        title: 'Boston and MIT',
+        description: 'Our first visit in MIT',
+        preview: 'images/visit_mit.JPG',
+        gallery: [
+          'images/visit_mit.JPG',
+          'images/visit_mit_1.JPG',
+          'images/visit_mit_2.JPG',
+          'images/visit_mit_3.JPG',
+          'images/visit_mit_4.JPG',
+          'images/visit_mit_5.JPG',
+          'images/visit_mit_6.JPG',
+        ]
+      },
+      {
+        title: 'Our First Fight',
+        description: 'Californian Love Fight. Thank you for being so patient to me! babe',
+        preview: 'images/cali_trip.HEIC',
+        gallery: [
+          'images/cali_trip.HEIC',
+          'images/cali_trip_2.HEIC',
+          'images/cali_trip_3.HEIC',
+          'images/cali_trip1.HEIC',
+          'images/cali_trip2.HEIC',
+          'images/cali_trip3.HEIC',
+          'images/cali_trip4.HEIC',
+          'images/cali_trip5.HEIC',
+          'images/cali_trip6.HEIC',
+          'images/cali_trip7.HEIC',
+          'images/cali_trip8.HEIC',
+          'images/cali_trip9.HEIC',
+          'images/cali_trip10.HEIC',
+          'images/cali_trip11.HEIC',
+          'images/cali_trip12.HEIC',
+          'images/cali_trip13.HEIC',
+          'images/cali_trip14.HEIC',
+          'images/cali_trip15.HEIC',
+
+        ]
+      }
+    ];
+
+    // Populate the list with memory previews
+    function displayMemories() {
+      const list = document.getElementById('memories-list');
+
+      memories.forEach((memory, index) => {
+        // Create the list item
+        const listItem = document.createElement('li');
+        listItem.className = 'activity-item';
+
+        // On click, open the gallery
+        listItem.onclick = function () {
+          showGallery(index);
+        };
+
+        // Fill in content
+        listItem.innerHTML = `
+          <img src="${memory.preview}" alt="${memory.title}" />
+          <div class="activity-description">
+            <h3>${memory.title}</h3>
+            <p>${memory.description}</p>
+          </div>
+        `;
+
+        list.appendChild(listItem);
+      });
+    }
+
+    // Show the full gallery for the clicked memory
+    function showGallery(memoryIndex) {
+      const galleryModal = document.getElementById('gallery-modal');
+      galleryModal.innerHTML = '<button id=\"close-btn\" onclick=\"closeGallery()\">×</button>'; // Clear old images, add close button
+
+      memories[memoryIndex].gallery.forEach(imagePath => {
+        const imgEl = document.createElement('img');
+        imgEl.src = imagePath;
+        galleryModal.appendChild(imgEl);
+      });
+
+      galleryModal.style.display = 'flex';
+    }
+
+    // Close the modal
+    function closeGallery() {
+      document.getElementById('gallery-modal').style.display = 'none';
+    }
+
+    // Load the memories on page load
+    displayMemories();
+
+    //  // List of images
+    //  const images = [
+    //         "new_york_2.JPG", "new_york_3.JPG", "new_york_4.JPG", "new_york_5.JPG", "new_york_6.JPG", 
+    //         "new_york_7.JPG", "new_york_8.JPG", "new_york_9.JPG", "new_york_10.JPG", "new_york.JPG",
+    //         "san_antonio_2.JPG", "san_antonio_3.JPG", "san_antonio_4.JPG", "san_antonio_5.JPG", "san_antonio_6.JPG", "san_antonio.JPG",
+    //         "visit_mit_1.JPG", "visit_mit_2.JPG", "visit_mit_3.JPG", "visit_mit_4.JPG", "visit_mit_5.JPG", "visit_mit_6.JPG", "visit_mit.JPG"
+    //     ];
+
+    //     // Function to categorize and display images
+    //     function displayImages() {
+    //         const newYorkGallery = document.getElementById("new-york-gallery");
+    //         const sanAntonioGallery = document.getElementById("san-antonio-gallery");
+    //         const visitMitGallery = document.getElementById("visit-mit-gallery");
+
+    //         images.forEach(image => {
+    //             const imgElement = document.createElement("img");
+    //             imgElement.src = `images_together/${image}`; // Change this to your actual path
+    //             imgElement.alt = image;
+
+    //             if (image.startsWith("new_york")) {
+    //                 newYorkGallery.appendChild(imgElement);
+    //             } else if (image.startsWith("san_antonio")) {
+    //                 sanAntonioGallery.appendChild(imgElement);
+    //             } else if (image.startsWith("visit_mit")) {
+    //                 visitMitGallery.appendChild(imgElement);
+    //             }
+    //         });
+    //     }
+
+    //     // Call function to display images
+    //     displayImages();
   </script>
 </body>
 </html>
